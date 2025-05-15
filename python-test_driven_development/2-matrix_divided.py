@@ -22,10 +22,9 @@ def matrix_divided(matrix, div):
                   or if div is not a number
         ZeroDivisionError: If div is zero
     """
-    # Validate matrix is a list of lists
-    if (not isinstance(matrix, list) or \
-       not all(isinstance(row, list) for row in matrix) or \
-       len(matrix) == 0:
+    # Validate matrix is a non-empty list of lists
+    if (not isinstance(matrix, list) or not matrix or \
+       not all(isinstance(row, list) for row in matrix):
         raise TypeError("matrix must be a matrix (list of lists) of integers/floats")
 
     # Validate all elements are numbers
