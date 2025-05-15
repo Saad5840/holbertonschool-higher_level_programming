@@ -1,7 +1,4 @@
->>> import sys
->>> sys.path.append(".")  # Make sure current directory is in sys.path
->>> from importlib import import_module
->>> add_integer = import_module("0-add_integer").add_integer
+>>> from 0-add_integer import add_integer
 >>> add_integer(1, 2)
 3
 >>> add_integer(100, -2)
