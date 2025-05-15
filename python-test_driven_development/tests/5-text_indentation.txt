@@ -1,0 +1,17 @@
+>>> text_indentation("Hello. How are you? I am fine: thanks.")
+Hello.
+
+How are you?
+
+I am fine:
+
+thanks.
+
+>>> text_indentation("No punctuation here")
+No punctuation here
+
+>>> try:
+...     text_indentation(123)
+... except Exception as e:
+...     print(e)
+text must be a string
