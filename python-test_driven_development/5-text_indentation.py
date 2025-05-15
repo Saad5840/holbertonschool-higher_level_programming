@@ -1,7 +1,9 @@
 #!/usr/bin/python3
 """
-This module provides a function to print text with 2 new lines after .?: characters.
+This module provides a function to print text with 2 new lines
+after .?: characters.
 """
+
 
 def text_indentation(text):
     """
