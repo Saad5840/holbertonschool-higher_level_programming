@@ -1,16 +1,31 @@
+Test cases for say_my_name function
+
+>>> say_my_name = __import__('3-say_my_name').say_my_name
+
+Test with both names
 >>> say_my_name("John", "Smith")
 My name is John Smith
->>> say_my_name("Walter", "White")
-My name is Walter White
+
+Test with only first name
 >>> say_my_name("Bob")
 My name is Bob 
->>> try:
-...     say_my_name(12, "White")
-... except Exception as e:
-...     print(e)
-first_name must be a string
->>> try:
-...     say_my_name("John", 15)
-... except Exception as e:
-...     print(e)
-last_name must be a string
+
+Test with empty last name
+>>> say_my_name("Alice", "")
+My name is Alice 
+
+Test invalid first name type
+>>> say_my_name(42, "Doe")
+Traceback (most recent call last):
+    ...
+TypeError: first_name must be a string
+
+Test invalid last name type
+>>> say_my_name("Jane", 42)
+Traceback (most recent call last):
+    ...
+TypeError: last_name must be a string
+
+Test with whitespace names
+>>> say_my_name("  John  ", "  Smith  ")
+My name is   John     Smith  
