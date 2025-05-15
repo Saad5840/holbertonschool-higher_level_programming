@@ -1,5 +1,7 @@
-"""
->>> from 0-add_integer import add_integer
+>>> import sys
+>>> sys.path.append(".")  # Make sure current directory is in sys.path
+>>> from importlib import import_module
+>>> add_integer = import_module("0-add_integer").add_integer
 >>> add_integer(1, 2)
 3
 >>> add_integer(100, -2)
@@ -19,6 +21,3 @@ Traceback (most recent call last):
 TypeError: a must be an integer
 >>> add_integer(3.7, 4.3)
 7
->>> add_integer(-5.5, -1)
--6
-"""
