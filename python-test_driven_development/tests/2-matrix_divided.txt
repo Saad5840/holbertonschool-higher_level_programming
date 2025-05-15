@@ -2,6 +2,17 @@ Test cases for matrix_divided function
 
 >>> matrix_divided = __import__('2-matrix_divided').matrix_divided
 
+>>> matrix_divided()  # Missing both arguments
+Traceback (most recent call last):
+    ...
+TypeError: matrix_divided() missing 2 required positional arguments: 'matrix' and 'div'
+
+>>> matrix_divided([[1, 2], [3, 4]])  # Missing div argument
+Traceback (most recent call last):
+    ...
+TypeError: matrix_divided() missing 1 required positional argument: 'div'
+
+
 >>> matrix = [[1, 2, 3], [4, 5, 6]]
 >>> matrix_divided(matrix, 3)
 [[0.33, 0.67, 1.0], [1.33, 1.67, 2.0]]
