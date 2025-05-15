@@ -9,16 +9,16 @@ def add_integer(a, b=98):
     Adds two integers or floats (after casting to int).
 
     Args:
-        a: first number (int or float)
-        b: second number (int or float, default is 98)
+        a: First number (int or float)
+        b: Second number (int or float, default is 98)
 
     Returns:
-        The sum of a and b as an integer.
+        The integer sum of a and b
 
     Raises:
         TypeError: If a or b are not integers or floats
 
-    Doctest examples:
+    Doctests:
     >>> add_integer(1, 2)
     3
     >>> add_integer(100, -2)
