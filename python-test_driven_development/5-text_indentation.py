@@ -21,7 +21,8 @@ def text_indentation(text):
     i = 0
     while i < len(text):
         if text[i] in ['.', '?', ':']:
-            print(text[i], end="\n\n")
+            print(text[i], end="")
+            print("\n")
             # Skip spaces after punctuation
             i += 1
             while i < len(text) and text[i] == ' ':
