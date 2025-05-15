@@ -1,9 +1,10 @@
 #!/usr/bin/python3
 """
-This module provides a function to add two integers.
+This module provides a function to add two numbers.
 
-It includes input validation to ensure the values are integers or floats,
-which are then cast to integers before addition.
+The function add_integer(a, b=98) returns the sum of a and b,
+after validating that both are integers or floats. Floats are
+cast to integers before addition. Raises TypeError if input is invalid.
 """
 
 def add_integer(a, b=98):
