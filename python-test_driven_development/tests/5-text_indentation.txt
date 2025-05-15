@@ -2,39 +2,41 @@ Test cases for text_indentation function
 
 >>> text_indentation = __import__('5-text_indentation').text_indentation
 
-Test basic punctuation
 >>> text_indentation("Hello. How are you? Good: thanks")
 Hello.
 How are you?
 Good:
 thanks
 
-Test multiple spaces after punctuation
 >>> text_indentation("First.   Second?   Third:")
 First.
 Second?
 Third:
 
-Test empty string
 >>> text_indentation("")
+[No Output]
 
-Test invalid input type
 >>> text_indentation(123)
 Traceback (most recent call last):
     ...
 TypeError: text must be a string
 
-Test mixed punctuation
 >>> text_indentation("One. Two? Three: Four.")
 One.
 Two?
 Three:
 Four.
 
-Test no punctuation
 >>> text_indentation("No punctuation here")
 No punctuation here
 
-Test punctuation at end
 >>> text_indentation("End with period.")
 End with period.
+
+>>> text_indentation("Consecutive...punctuation??Yes:")
+Consecutive.
+.
+.
+punctuation?
+?
+Yes:

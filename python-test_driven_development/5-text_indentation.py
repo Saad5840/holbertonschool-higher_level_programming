@@ -1,14 +1,14 @@
 #!/usr/bin/python3
 """
-This module prints text with 2 new lines after each '.', '?', and ':'.
+This module provides a function to print text with 2 new lines after .?: characters.
 """
 
 def text_indentation(text):
     """
-    Prints text with 2 new lines after specific punctuation marks.
+    Prints text with 2 new lines after each '.', '?', and ':'.
 
     Args:
-        text: Input string to format
+        text: The input text to format
 
     Raises:
         TypeError: If text is not a string
@@ -19,8 +19,8 @@ def text_indentation(text):
     i = 0
     while i < len(text):
         if text[i] in ['.', '?', ':']:
-            print(text[i], end="\n")
-            # Skip any spaces immediately after punctuation
+            print(text[i], end="\n\n")
+            # Skip spaces after punctuation
             i += 1
             while i < len(text) and text[i] == ' ':
                 i += 1
