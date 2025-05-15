@@ -1,4 +1,6 @@
->>> from 0-add_integer import add_integer
+"""
+Unit tests for add_integer function.
+
 >>> add_integer(1, 2)
 3
 >>> add_integer(100, -2)
@@ -18,3 +20,6 @@ Traceback (most recent call last):
 TypeError: a must be an integer
 >>> add_integer(3.7, 4.3)
 7
+>>> add_integer(-5.5, -1)
+-6
+"""
