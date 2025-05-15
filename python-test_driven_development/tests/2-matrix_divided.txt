@@ -1,5 +1,10 @@
 Test cases for matrix_divided function
 
+>>> import math
+>>> matrix = [[1, 2], [3, 4]]
+>>> matrix_divided(matrix, float('inf'))
+[[0.0, 0.0], [0.0, 0.0]]
+
 >>> matrix_divided = __import__('2-matrix_divided').matrix_divided
 
 >>> matrix_divided()  # Missing both arguments

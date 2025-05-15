@@ -38,4 +38,8 @@ def matrix_divided(matrix, div):
     if div == 0:
         raise ZeroDivisionError("division by zero")
 
+    # Special case for infinity
+    if div == float('inf'):
+        return [[0.0 for _ in row] for row in matrix]
+
     return [[round(num / div, 2) for num in row] for row in matrix]
