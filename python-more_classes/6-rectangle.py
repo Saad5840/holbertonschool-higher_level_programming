@@ -8,6 +8,7 @@ and tracking the number of instances.
 class Rectangle:
     """Defines a rectangle with width and height."""
 
+
     number_of_instances = 0  # public class attribute
 
     def __init__(self, width=0, height=0):
