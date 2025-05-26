@@ -1,29 +1,63 @@
 >>> BaseGeometry = __import__('7-base_geometry').BaseGeometry
->>> bg = BaseGeometry()
->>> bg.integer_validator("length", 10)
->>> bg.integer_validator("size", 1)
 
+# Test valid integers
 >>> bg = BaseGeometry()
->>> try:
-...     bg.integer_validator("name", "Alice")
-... except Exception as e:
-...     print("[{}] {}".format(e.__class__.__name__, e))
-[TypeError] name must be an integer
+>>> bg.integer_validator("width", 10)
+>>> bg.integer_validator("height", 1000000)
 
+# Test valid smallest positive integer
 >>> bg = BaseGeometry()
->>> try:
-...     bg.integer_validator("age", 0)
-... except Exception as e:
-...     print("[{}] {}".format(e.__class__.__name__, e))
-[ValueError] age must be greater than 0
+>>> bg.integer_validator("length", 1)
 
+# Test invalid types: string
 >>> bg = BaseGeometry()
 >>> try:
-...     bg.integer_validator("height", -5)
+...     bg.integer_validator("x", "42")
 ... except Exception as e:
 ...     print("[{}] {}".format(e.__class__.__name__, e))
-[ValueError] height must be greater than 0
+[TypeError] x must be an integer
 
+# Test invalid types: float
+>>> bg = BaseGeometry()
+>>> try:
+...     bg.integer_validator("y", 3.14)
+... except Exception as e:
+...     print("[{}] {}".format(e.__class__.__name__, e))
+[TypeError] y must be an integer
+
+# Test invalid types: list
+>>> bg = BaseGeometry()
+>>> try:
+...     bg.integer_validator("z", [1, 2, 3])
+... except Exception as e:
+...     print("[{}] {}".format(e.__class__.__name__, e))
+[TypeError] z must be an integer
+
+# Test invalid types: dict
+>>> bg = BaseGeometry()
+>>> try:
+...     bg.integer_validator("options", {"a": 1})
+... except Exception as e:
+...     print("[{}] {}".format(e.__class__.__name__, e))
+[TypeError] options must be an integer
+
+# Test invalid value: 0
+>>> bg = BaseGeometry()
+>>> try:
+...     bg.integer_validator("radius", 0)
+... except Exception as e:
+...     print("[{}] {}".format(e.__class__.__name__, e))
+[ValueError] radius must be greater than 0
+
+# Test invalid value: negative
+>>> bg = BaseGeometry()
+>>> try:
+...     bg.integer_validator("depth", -1)
+... except Exception as e:
+...     print("[{}] {}".format(e.__class__.__name__, e))
+[ValueError] depth must be greater than 0
+
+# Test area method raises the exception
 >>> bg = BaseGeometry()
 >>> try:
 ...     bg.area()
