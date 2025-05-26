@@ -1,42 +1,110 @@
->>> from 7-base_geometry import BaseGeometry
+>>> BaseGeometry = __import__('7-base_geometry').BaseGeometry
+
+# Test valid integers
 >>> bg = BaseGeometry()
+>>> bg.integer_validator("width", 10)
+>>> bg.integer_validator("height", 1000000)
 
->>> # Valid integers
->>> bg.integer_validator("my_int", 12)
->>> bg.integer_validator("width", 89)
->>> bg.integer_validator("age", 25)
+# Test valid smallest positive integer
+>>> bg.integer_validator("length", 1)
 
->>> # Invalid: string instead of int
+# Test very large integer
+>>> bg.integer_validator("big", 999999999999999999999999999999)
+
+# Test empty string name with valid value
+>>> bg.integer_validator("", 42)
+
+# Test multiple valid calls to ensure no shared state
+>>> bg.integer_validator("first", 5)
+>>> bg.integer_validator("second", 10)
+
+# Test invalid types: string
 >>> try:
-...     bg.integer_validator("name", "Alice")
+...     bg.integer_validator("x", "42")
 ... except Exception as e:
 ...     print("[{}] {}".format(e.__class__.__name__, e))
-[TypeError] name must be an integer
+[TypeError] x must be an integer
 
->>> # Invalid: value is 0
+# Test invalid types: float
 >>> try:
-...     bg.integer_validator("age", 0)
+...     bg.integer_validator("y", 3.14)
 ... except Exception as e:
 ...     print("[{}] {}".format(e.__class__.__name__, e))
-[ValueError] age must be greater than 0
+[TypeError] y must be an integer
 
->>> # Invalid: value is negative
+# Test invalid types: list
 >>> try:
-...     bg.integer_validator("height", -5)
+...     bg.integer_validator("z", [1, 2, 3])
 ... except Exception as e:
 ...     print("[{}] {}".format(e.__class__.__name__, e))
-[ValueError] height must be greater than 0
+[TypeError] z must be an integer
 
->>> # Missing arguments
+# Test invalid types: dict
+>>> try:
+...     bg.integer_validator("options", {"a": 1})
+... except Exception as e:
+...     print("[{}] {}".format(e.__class__.__name__, e))
+[TypeError] options must be an integer
+
+# Test invalid types: None
+>>> try:
+...     bg.integer_validator("nullable", None)
+... except Exception as e:
+...     print("[{}] {}".format(e.__class__.__name__, e))
+[TypeError] nullable must be an integer
+
+# Test invalid types: boolean
+>>> try:
+...     bg.integer_validator("truthy", True)
+... except Exception as e:
+...     print("[{}] {}".format(e.__class__.__name__, e))
+[TypeError] truthy must be an integer
+
+# Test invalid types: tuple
+>>> try:
+...     bg.integer_validator("tuple", (1, 2))
+... except Exception as e:
+...     print("[{}] {}".format(e.__class__.__name__, e))
+[TypeError] tuple must be an integer
+
+# Test invalid types: set
+>>> try:
+...     bg.integer_validator("set", {1, 2, 3})
+... except Exception as e:
+...     print("[{}] {}".format(e.__class__.__name__, e))
+[TypeError] set must be an integer
+
+# Test invalid value: 0
+>>> try:
+...     bg.integer_validator("radius", 0)
+... except Exception as e:
+...     print("[{}] {}".format(e.__class__.__name__, e))
+[ValueError] radius must be greater than 0
+
+# Test invalid value: negative
+>>> try:
+...     bg.integer_validator("depth", -1)
+... except Exception as e:
+...     print("[{}] {}".format(e.__class__.__name__, e))
+[ValueError] depth must be greater than 0
+
+# Test area method raises the exception
+>>> try:
+...     bg.area()
+... except Exception as e:
+...     print("[{}] {}".format(e.__class__.__name__, e))
+[Exception] area() is not implemented
+
+# Test missing arguments
 >>> try:
 ...     bg.integer_validator()
 ... except Exception as e:
 ...     print("[{}] {}".format(e.__class__.__name__, e))
 [TypeError] integer_validator() missing 2 required positional arguments: 'name' and 'value'
 
->>> # Test area() not implemented
+# Test extra arguments
 >>> try:
-...     bg.area()
+...     bg.integer_validator("x", 10, "extra")
 ... except Exception as e:
 ...     print("[{}] {}".format(e.__class__.__name__, e))
-[Exception] area() is not implemented
+[TypeError] integer_validator() takes 3 positional arguments but 4 were given
