@@ -1,14 +1,56 @@
-Test cases for MyList class
-
 >>> MyList = __import__('1-my_list').MyList
->>> my_list = MyList([1, 4, 2, 3, 5])
+
+# Basic functionality
+>>> my_list = MyList()
+>>> my_list.append(1)
+>>> my_list.append(4)
+>>> my_list.append(2)
+>>> my_list.append(3)
+>>> my_list.append(5)
+>>> print(my_list)
+[1, 4, 2, 3, 5]
 >>> my_list.print_sorted()
 [1, 2, 3, 4, 5]
 >>> print(my_list)
 [1, 4, 2, 3, 5]
+
+# Empty list
 >>> empty_list = MyList()
+>>> print(empty_list)
+[]
 >>> empty_list.print_sorted()
 []
->>> single_list = MyList([42])
->>> single_list.print_sorted()
-[42]
+
+# Already sorted list
+>>> sorted_list = MyList([1, 2, 3, 4, 5])
+>>> print(sorted_list)
+[1, 2, 3, 4, 5]
+>>> sorted_list.print_sorted()
+[1, 2, 3, 4, 5]
+
+# Reversed list
+>>> reversed_list = MyList([5, 4, 3, 2, 1])
+>>> print(reversed_list)
+[5, 4, 3, 2, 1]
+>>> reversed_list.print_sorted()
+[1, 2, 3, 4, 5]
+>>> print(reversed_list)
+[5, 4, 3, 2, 1]
+
+# List with duplicate values
+>>> dup_list = MyList([3, 1, 2, 3, 1])
+>>> print(dup_list)
+[3, 1, 2, 3, 1]
+>>> dup_list.print_sorted()
+[1, 1, 2, 3, 3]
+>>> print(dup_list)
+[3, 1, 2, 3, 1]
+
+# Negative numbers and zero
+>>> neg_list = MyList([0, -3, 5, -1, 2])
+>>> print(neg_list)
+[0, -3, 5, -1, 2]
+>>> neg_list.print_sorted()
+[-3, -1, 0, 2, 5]
+>>> print(neg_list)
+[0, -3, 5, -1, 2]
