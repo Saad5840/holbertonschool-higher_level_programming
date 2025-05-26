@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-This module defines a class BaseGeometry with a placeholder for area calculation.
+This module defines class BaseGeometry with placeholder for area calculation.
 """
 
 
@@ -11,6 +11,6 @@ class BaseGeometry:
 
     def area(self):
         """
-        Raises an exception indicating that the area method is not implemented.
+        Raises an exception indicating that area method is not implemented.
         """
         raise Exception("area() is not implemented")
