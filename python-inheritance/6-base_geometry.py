@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-This module defines a class BaseGeometry with a placeholder method for area calculation.
+This module defines a class BaseGeometry with a placeholder for area calculation.
 """
 
 
