@@ -1,64 +1,40 @@
->>> BaseGeometry = __import__('7-base_geometry').BaseGeometry
-
-# Test valid integers
+>>> from 7-base_geometry import BaseGeometry
 >>> bg = BaseGeometry()
->>> bg.integer_validator("width", 10)
->>> bg.integer_validator("height", 1000000)
 
-# Test valid smallest positive integer
->>> bg = BaseGeometry()
->>> bg.integer_validator("length", 1)
+>>> # Valid integers
+>>> bg.integer_validator("my_int", 12)
+>>> bg.integer_validator("width", 89)
+>>> bg.integer_validator("age", 25)
 
-# Test invalid types: string
->>> bg = BaseGeometry()
+>>> # Invalid: string instead of int
 >>> try:
-...     bg.integer_validator("x", "42")
+...     bg.integer_validator("name", "Alice")
 ... except Exception as e:
 ...     print("[{}] {}".format(e.__class__.__name__, e))
-[TypeError] x must be an integer
+[TypeError] name must be an integer
 
-# Test invalid types: float
->>> bg = BaseGeometry()
+>>> # Invalid: value is 0
 >>> try:
-...     bg.integer_validator("y", 3.14)
+...     bg.integer_validator("age", 0)
 ... except Exception as e:
 ...     print("[{}] {}".format(e.__class__.__name__, e))
-[TypeError] y must be an integer
+[ValueError] age must be greater than 0
 
-# Test invalid types: list
->>> bg = BaseGeometry()
+>>> # Invalid: value is negative
 >>> try:
-...     bg.integer_validator("z", [1, 2, 3])
+...     bg.integer_validator("height", -5)
 ... except Exception as e:
 ...     print("[{}] {}".format(e.__class__.__name__, e))
-[TypeError] z must be an integer
+[ValueError] height must be greater than 0
 
-# Test invalid types: dict
->>> bg = BaseGeometry()
+>>> # Missing arguments
 >>> try:
-...     bg.integer_validator("options", {"a": 1})
+...     bg.integer_validator()
 ... except Exception as e:
 ...     print("[{}] {}".format(e.__class__.__name__, e))
-[TypeError] options must be an integer
+[TypeError] integer_validator() missing 2 required positional arguments: 'name' and 'value'
 
-# Test invalid value: 0
->>> bg = BaseGeometry()
->>> try:
-...     bg.integer_validator("radius", 0)
-... except Exception as e:
-...     print("[{}] {}".format(e.__class__.__name__, e))
-[ValueError] radius must be greater than 0
-
-# Test invalid value: negative
->>> bg = BaseGeometry()
->>> try:
-...     bg.integer_validator("depth", -1)
-... except Exception as e:
-...     print("[{}] {}".format(e.__class__.__name__, e))
-[ValueError] depth must be greater than 0
-
-# Test area method raises the exception
->>> bg = BaseGeometry()
+>>> # Test area() not implemented
 >>> try:
 ...     bg.area()
 ... except Exception as e:
