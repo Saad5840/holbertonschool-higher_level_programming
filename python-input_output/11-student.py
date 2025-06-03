@@ -1,6 +1,4 @@
 #!/usr/bin/python3
-
-
 """Defines a Student class with JSON serialization and deserialization."""
 
 
@@ -24,7 +22,7 @@ class Student:
 
         Args:
             attrs (list, optional): List of attribute names to include.
-                                    If None, all attributes are included.
+                If None, all attributes are included.
 
         Returns:
             dict: Dictionary representation of the student instance.
