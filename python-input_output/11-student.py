@@ -28,7 +28,11 @@ class Student:
             dict: Dictionary representation of the student instance.
         """
         if isinstance(attrs, list) and all(isinstance(a, str) for a in attrs):
-            return {attr: getattr(self, attr) for attr in attrs if hasattr(self, attr)}
+            result = {}
+            for attr in attrs:
+                if hasattr(self, attr):
+                    result[attr] = getattr(self, attr)
+            return result
         return self.__dict__.copy()
 
     def reload_from_json(self, json):
