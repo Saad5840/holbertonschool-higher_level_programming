@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """Module that defines a Student class with optional JSON serialization."""
 
+
 class Student:
     """Defines a student with first name, last name, and age."""
 
@@ -28,7 +29,7 @@ class Student:
         Returns:
             dict: Dictionary representation of the student instance.
         """
-        if type(attrs) == list and all(type(a) == str for a in attrs):
+        if isinstance(attrs, list) and all(isinstance(a, str) for a in attrs):
             filtered = {}
             for attr in attrs:
                 if hasattr(self, attr):
