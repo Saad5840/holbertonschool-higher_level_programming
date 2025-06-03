@@ -39,7 +39,8 @@ class Student:
         """Replace all attributes of the Student instance with those in json.
 
         Args:
-            json (dict): Dictionary with keys as attribute names and values as attribute values.
+            json (dict): Dictionary with keys as attribute 
+                names and values as attribute values.
         """
         for key, value in json.items():
             setattr(self, key, value)
