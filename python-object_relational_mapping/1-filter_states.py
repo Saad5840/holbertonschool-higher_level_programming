@@ -1,34 +1,37 @@
 #!/usr/bin/python3
 """
-Lists all states with a name starting with 'N' from the database hbtn_0e_0_usa.
+Lists all states with a name starting with 'N' from the given database.
 
-Uses MySQLdb to connect to a MySQL database and execute the query.
+Connects to a MySQL server on localhost at port 3306 using MySQLdb,
+fetches states where the name starts with 'N', and prints them sorted
+by states.id in ascending order.
+
+Usage:
+    ./1-filter_states.py <mysql username> <mysql password> <database name>
 """
 
-import MySQLdb
 import sys
-
-
-def filter_states_starting_with_N(username, password, dbname):
-    """
-    Connects to the MySQL database and lists all states starting with 'N'.
-
-    Args:
-        username (str): MySQL username
-        password (str): MySQL password
-        dbname (str): MySQL database name
-    """
-    db = MySQLdb.connect(
-        host="localhost", port=3306, user=username, passwd=password, db=dbname
-    )
-    cursor = db.cursor()
-    cursor.execute("SELECT * FROM states WHERE name LIKE 'N%' ORDER BY id ASC")
-    rows = cursor.fetchall()
-    for row in rows:
-        print(row)
-    cursor.close()
-    db.close()
-
+import MySQLdb
 
 if __name__ == "__main__":
-    filter_states_starting_with_N(sys.argv[1], sys.argv[2], sys.argv[3])
+    # Get arguments
+    username = sys.argv[1]
+    password = sys.argv[2]
+    db_name = sys.argv[3]
+
+    # Connect to MySQL database
+    db = MySQLdb.connect(host="localhost", port=3306,
+                         user=username, passwd=password, db=db_name)
+    cursor = db.cursor()
+
+    # Execute SQL query to select states starting with 'N' ordered by id
+    cursor.execute("SELECT * FROM states WHERE name LIKE 'N%' ORDER BY id ASC")
+
+    # Fetch all results and print each row
+    states = cursor.fetchall()
+    for state in states:
+        print(state)
+
+    # Close cursor and connection
+    cursor.close()
+    db.close()
