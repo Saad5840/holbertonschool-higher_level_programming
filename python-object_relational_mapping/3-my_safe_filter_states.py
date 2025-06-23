@@ -1,48 +1,63 @@
 #!/usr/bin/python3
 """
-This script takes 4 arguments: mysql username, mysql password,
-database name, and a state name to search for in the `states` table.
-It connects to the MySQL database using MySQLdb, safely queries for
-states with the given name using parameterized queries to prevent SQL injection,
-and prints the results sorted by states.id in ascending order.
+This script safely lists all states from the database hbtn_0e_0_usa
+where the name matches the user input, using parameterized queries
+to prevent SQL injection attacks.
 """
-
-import sys
 import MySQLdb
+import sys
 
 
-def main():
+def safe_filter_states():
+    """
+    Safely filters states by name using parameterized queries.
+    Takes 4 command line arguments:
+    - MySQL username
+    - MySQL password
+    - Database name
+    - State name to search for
+    """
     if len(sys.argv) != 5:
+        print("Usage: ./3-my_safe_filter_states.py <username> <password> <database> <state_name>")
         return
 
-    user = sys.argv[1]
+    username = sys.argv[1]
     password = sys.argv[2]
-    database = sys.argv[3]
+    db_name = sys.argv[3]
     state_name = sys.argv[4]
 
-    # Connect to MySQL database
-    db = MySQLdb.connect(
-        host="localhost",
-        port=3306,
-        user=user,
-        passwd=password,
-        db=database,
-        charset="utf8"
-    )
+    try:
+        # Connect to MySQL database
+        db = MySQLdb.connect(
+            host="localhost",
+            port=3306,
+            user=username,
+            passwd=password,
+            db=db_name,
+            charset="utf8"
+        )
 
-    cursor = db.cursor()
+        # Create cursor to execute queries
+        cursor = db.cursor()
 
-    # Use parameterized query to prevent SQL injection
-    query = "SELECT * FROM states WHERE name = %s ORDER BY id ASC"
-    cursor.execute(query, (state_name,))
+        # Execute parameterized query to prevent SQL injection
+        query = "SELECT * FROM states WHERE name = %s ORDER BY id ASC"
+        cursor.execute(query, (state_name,))
 
-    rows = cursor.fetchall()
-    for row in rows:
-        print(row)
+        # Fetch and display results
+        results = cursor.fetchall()
+        for row in results:
+            print(row)
 
-    cursor.close()
-    db.close()
+    except MySQLdb.Error as e:
+        print(f"Error connecting to MySQL: {e}")
+    finally:
+        # Close cursor and connection
+        if 'cursor' in locals():
+            cursor.close()
+        if 'db' in locals():
+            db.close()
 
 
 if __name__ == "__main__":
-    main()
+    safe_filter_states()
