@@ -1,36 +1,35 @@
 #!/usr/bin/python3
 """
-Lists all states where name matches the user input from the database hbtn_0e_0_usa.
-
-This script uses MySQLdb and receives MySQL credentials and the state name as arguments.
+Lists all states with a name matching the user input from the database hbtn_0e_0_usa.
+This script uses MySQLdb and a formatted SQL query.
 """
 
 import MySQLdb
 import sys
 
 
-def filter_states_by_name(username, password, dbname, statename):
-    """
-    Connects to the MySQL database and lists states that match a specific name.
-
-    Args:
-        username (str): MySQL username
-        password (str): MySQL password
-        dbname (str): MySQL database name
-        statename (str): Name of the state to match
-    """
+if __name__ == "__main__":
+    # Connect to MySQL server
     db = MySQLdb.connect(
-        host="localhost", port=3306, user=username, passwd=password, db=dbname
+        host="localhost",
+        port=3306,
+        user=sys.argv[1],
+        passwd=sys.argv[2],
+        db=sys.argv[3]
     )
     cursor = db.cursor()
-    query = "SELECT * FROM states WHERE name = '{}' ORDER BY id ASC".format(statename)
+
+    # Escape single quotes in the input to avoid syntax errors
+    user_input = sys.argv[4].replace("'", "''")
+
+    # Create query using format as required (NOT recommended in real-world apps)
+    query = "SELECT * FROM states WHERE name = '{}' ORDER BY id ASC".format(user_input)
+
     cursor.execute(query)
     rows = cursor.fetchall()
     for row in rows:
         print(row)
+
+    # Cleanup
     cursor.close()
     db.close()
-
-
-if __name__ == "__main__":
-    filter_states_by_name(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
