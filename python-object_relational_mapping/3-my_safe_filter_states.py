@@ -1,47 +1,48 @@
 #!/usr/bin/python3
 """
-Lists all states from the database hbtn_0e_0_usa where name matches the argument,
-using parameterized queries to prevent SQL injection.
+This script safely lists all states from the database hbtn_0e_0_usa
+where the name matches the user input. It uses parameterized queries
+to prevent SQL injection vulnerabilities.
 """
 import MySQLdb
 import sys
 
+
 if __name__ == "__main__":
-    # Check for correct number of arguments
+    """
+    Main execution block that connects to the database and executes
+    a safe parameterized query to find matching states.
+    """
     if len(sys.argv) != 5:
+        print("Usage: ./3-my_safe_filter_states.py <username> <password> <database> <state_name>")
         sys.exit(1)
 
-    username = sys.argv[1]
-    password = sys.argv[2]
-    db_name = sys.argv[3]
-    state_name = sys.argv[4]
+    username, password, db_name, state_name = sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4]
 
     try:
-        # Connect to MySQL database
         db = MySQLdb.connect(
             host="localhost",
             port=3306,
             user=username,
             passwd=password,
-            db=db_name
+            db=db_name,
+            charset="utf8"
         )
 
-        # Create cursor
         cur = db.cursor()
 
-        # Execute parameterized query (safe from SQL injection)
-        query = "SELECT * FROM states WHERE name = %s ORDER BY id ASC"
+        # Safe parameterized query
+        query = "SELECT * FROM states WHERE BINARY name = %s ORDER BY id ASC"
         cur.execute(query, (state_name,))
 
-        # Fetch and display results
         rows = cur.fetchall()
         for row in rows:
             print(row)
 
     except MySQLdb.Error as e:
-        print("Error:", e)
+        print("MySQL Error:", e)
+        sys.exit(1)
     finally:
-        # Close connections
         if 'cur' in locals():
             cur.close()
         if 'db' in locals():
