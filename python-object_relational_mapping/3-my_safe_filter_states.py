@@ -1,25 +1,15 @@
 #!/usr/bin/python3
 """
-This script safely lists all states from the database hbtn_0e_0_usa
-where the name matches the user input, using parameterized queries
-to prevent SQL injection attacks.
+Lists all states from the database hbtn_0e_0_usa where name matches the argument,
+using parameterized queries to prevent SQL injection.
 """
 import MySQLdb
 import sys
 
-
-def safe_filter_states():
-    """
-    Safely filters states by name using parameterized queries.
-    Takes 4 command line arguments:
-    - MySQL username
-    - MySQL password
-    - Database name
-    - State name to search for
-    """
+if __name__ == "__main__":
+    # Check for correct number of arguments
     if len(sys.argv) != 5:
-        print("Usage: ./3-my_safe_filter_states.py <username> <password> <database> <state_name>")
-        return
+        sys.exit(1)
 
     username = sys.argv[1]
     password = sys.argv[2]
@@ -33,31 +23,26 @@ def safe_filter_states():
             port=3306,
             user=username,
             passwd=password,
-            db=db_name,
-            charset="utf8"
+            db=db_name
         )
 
-        # Create cursor to execute queries
-        cursor = db.cursor()
+        # Create cursor
+        cur = db.cursor()
 
-        # Execute parameterized query to prevent SQL injection
+        # Execute parameterized query (safe from SQL injection)
         query = "SELECT * FROM states WHERE name = %s ORDER BY id ASC"
-        cursor.execute(query, (state_name,))
+        cur.execute(query, (state_name,))
 
         # Fetch and display results
-        results = cursor.fetchall()
-        for row in results:
+        rows = cur.fetchall()
+        for row in rows:
             print(row)
 
     except MySQLdb.Error as e:
-        print(f"Error connecting to MySQL: {e}")
+        print("Error:", e)
     finally:
-        # Close cursor and connection
-        if 'cursor' in locals():
-            cursor.close()
+        # Close connections
+        if 'cur' in locals():
+            cur.close()
         if 'db' in locals():
             db.close()
-
-
-if __name__ == "__main__":
-    safe_filter_states()
