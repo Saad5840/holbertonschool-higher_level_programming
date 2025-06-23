@@ -1,41 +1,46 @@
 #!/usr/bin/python3
 """
-Lists all states from the database hbtn_0e_0_usa where name matches the user input.
+This module connects to a MySQL database and lists all states
+from the 'states' table where the name matches the given user input.
+
+Usage:
+    ./2-my_filter_states.py <mysql_username> <mysql_password> <database_name> <state_name>
+
+The results are sorted by states.id in ascending order.
 """
 
 import MySQLdb
 import sys
 
-if __name__ == "__main__":
-    # Get MySQL credentials and state name from command-line arguments
-    username = sys.argv[1]
-    password = sys.argv[2]
-    database = sys.argv[3]
-    state_name = sys.argv[4]
 
-    # Connect to MySQL database
-    db = MySQLdb.connect(
-        host="localhost",
-        port=3306,
-        user=username,
-        passwd=password,
-        db=database
-    )
+def list_states_by_name(username, password, database, state_name):
+    """
+    Connects to the MySQL database and prints all states with
+    the specified name.
 
-    # Create cursor
-    cur = db.cursor()
+    Args:
+        username (str): MySQL username.
+        password (str): MySQL password.
+        database (str): Name of the database to connect to.
+        state_name (str): State name to filter by.
 
-    # Create SQL query using format (as required)
+    Returns:
+        None
+    """
+    db = MySQLdb.connect(host="localhost",
+                         port=3306,
+                         user=username,
+                         passwd=password,
+                         db=database)
+    cursor = db.cursor()
     query = "SELECT * FROM states WHERE name = '{}' ORDER BY id ASC".format(state_name)
-
-    # Execute query
-    cur.execute(query)
-
-    # Fetch and print results
-    rows = cur.fetchall()
+    cursor.execute(query)
+    rows = cursor.fetchall()
     for row in rows:
         print(row)
-
-    # Close connection
-    cur.close()
+    cursor.close()
     db.close()
+
+
+if __name__ == "__main__":
+    list_states_by_name(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
