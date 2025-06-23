@@ -1,38 +1,39 @@
 #!/usr/bin/python3
 """
-Lists all states with a name starting with N (upper N) from the database hbtn_0e_0_usa
+Lists all states with a name starting with 'N' from the given MySQL database.
+
+Takes 3 arguments: mysql username, mysql password, and database name.
+Connects to MySQL on localhost:3306 using MySQLdb.
+Displays results sorted by states.id in ascending order.
 """
-import MySQLdb
 import sys
+import MySQLdb
 
-if __name__ == "__main__":
-    # Get command line arguments
-    username = sys.argv[1]
-    password = sys.argv[2]
-    db_name = sys.argv[3]
 
-    # Connect to MySQL server
-    db = MySQLdb.connect(
-        host="localhost",
-        port=3306,
-        user=username,
-        passwd=password,
-        db=db_name
-    )
+def main():
+    # Get arguments
+    username, password, db_name = sys.argv[1], sys.argv[2], sys.argv[3]
 
-    # Create a cursor object
+    # Connect to MySQL
+    db = MySQLdb.connect(host="localhost", port=3306,
+                         user=username, passwd=password,
+                         db=db_name, charset="utf8")
+
     cursor = db.cursor()
 
-    # Execute SQL query to select states starting with 'N'
-    cursor.execute("SELECT * FROM states WHERE name LIKE 'N%' ORDER BY id ASC")
+    # Select states where name starts with 'N'
+    query = "SELECT * FROM states WHERE name LIKE 'N%' ORDER BY id ASC;"
 
-    # Fetch all rows
+    cursor.execute(query)
+
     rows = cursor.fetchall()
 
-    # Print each row
     for row in rows:
         print(row)
 
-    # Close cursor and database connection
     cursor.close()
     db.close()
+
+
+if __name__ == "__main__":
+    main()
